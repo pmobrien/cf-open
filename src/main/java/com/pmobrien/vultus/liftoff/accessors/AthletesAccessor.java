@@ -74,7 +74,7 @@ public class AthletesAccessor {
           throw new ValidationException("Error: You have not entered an age yet.");
         }
         
-        session.save(athlete.setUpdated(new Date()));
+        session.save(athlete.setCreated(new Date()));
         
         return session.load(Athlete.class, athlete.getId());
       } else {
@@ -89,7 +89,6 @@ public class AthletesAccessor {
                 )
                 .setMetcon(Optional.ofNullable(athlete.getMetcon()).orElse(athleteByUsername.getMetcon()))
                 .setRx(Optional.ofNullable(athlete.isRx()).orElse(athleteByUsername.isRx()))
-                .setCreated(new Date())
                 .setUpdated(new Date())
         );
         
@@ -110,16 +109,16 @@ public class AthletesAccessor {
         if(athlete.getSnatch() == null || athlete.getCleanAndJerk() == null) {
           sinclair = 0.0;
         } else {
-          sinclair = (double)formatter.parse(
+          sinclair = formatter.parse(
               formatter.format(
                   sinclair(athlete.getSnatch() + athlete.getCleanAndJerk(), athlete.getWeight(), athlete.getGender())
               )
-          );
+          ).doubleValue();
         }
         
         score = athlete.getMetcon() == null || sinclair == 0.0
             ? 0.0
-            : (double)formatter.parse(formatter.format(sinclair + (double)athlete.getMetcon()));
+            : formatter.parse(formatter.format(sinclair + (double)athlete.getMetcon())).doubleValue();
       } catch(ParseException ex) {
         score = 0.0;
         sinclair = 0.0;
