@@ -1,7 +1,7 @@
 package com.pmobrien.vultus.liftoff;
 
 import com.google.common.base.Strings;
-import com.pobrien.vultus.liftoff.filters.RequestLoggerFilter;
+import com.pmobrien.vultus.liftoff.filters.RequestLoggerFilter;
 import com.pmobrien.vultus.liftoff.mappers.DefaultObjectMapper;
 import com.pmobrien.vultus.liftoff.mappers.UncaughtExceptionMapper;
 import com.pmobrien.vultus.liftoff.services.impl.ScoresService;
