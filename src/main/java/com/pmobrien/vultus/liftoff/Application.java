@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.pmobrien.vultus.liftoff.filters.RequestLoggerFilter;
 import com.pmobrien.vultus.liftoff.mappers.DefaultObjectMapper;
 import com.pmobrien.vultus.liftoff.mappers.UncaughtExceptionMapper;
+import com.pmobrien.vultus.liftoff.neo.NeoConnector;
 import com.pmobrien.vultus.liftoff.services.impl.ScoresService;
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Optional;
 import org.eclipse.jetty.server.ForwardedRequestCustomizer;
 import org.eclipse.jetty.server.Handler;
@@ -40,6 +42,13 @@ public class Application {
         properties.load(Files.newInputStream(new File(System.getProperty(Properties.PROP_FILE)).toPath()));
         
         System.getProperties().putAll(properties);
+      }
+      
+      if(Strings.isNullOrEmpty(System.getProperty(NeoConnector.NEO_STORE))) {
+        System.setProperty(
+            NeoConnector.NEO_STORE,
+            Paths.get(Paths.get("").toAbsolutePath().toString(), "target", "neo-store").toString()
+        );
       }
       
       new Application().run(new Server());
