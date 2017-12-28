@@ -9,7 +9,7 @@ To get up and running in one step:
 mvn clean install && java -Dhttp-port=15000 -jar target/vultus-liftoff.jar
 ```
 
-This will spin up an embedded Jetty server, hosting a simple page on `localhost:15000`. Data is stored in an embedded [Neo4j](https://neo4j.com/) database. The unit tests populate the table with a few entries that will show up in the table when you open the page.
+This will spin up an embedded Jetty server, hosting a simple page on `localhost:15000`. Data is stored in an embedded [Neo4j](https://neo4j.com/) database. The unit tests populate the table with a few entries that will show up when you open the page.
 
 
 ## Available system properties include:
