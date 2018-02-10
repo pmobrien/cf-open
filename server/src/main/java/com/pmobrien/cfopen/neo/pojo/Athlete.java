@@ -1,4 +1,4 @@
-package com.pmobrien.vultus.liftoff.neo.pojo;
+package com.pmobrien.cfopen.neo.pojo;
 
 import java.util.Date;
 import org.neo4j.ogm.annotation.NodeEntity;

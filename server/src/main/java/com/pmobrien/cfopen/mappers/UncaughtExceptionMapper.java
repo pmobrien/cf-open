@@ -1,4 +1,4 @@
-package com.pmobrien.vultus.liftoff.mappers;
+package com.pmobrien.cfopen.mappers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;

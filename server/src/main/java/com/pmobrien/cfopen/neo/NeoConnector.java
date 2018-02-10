@@ -1,4 +1,4 @@
-package com.pmobrien.vultus.liftoff.neo;
+package com.pmobrien.cfopen.neo;
 
 import com.google.common.base.Strings;
 import com.google.common.base.Suppliers;

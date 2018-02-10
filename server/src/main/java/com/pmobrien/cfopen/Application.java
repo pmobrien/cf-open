@@ -1,11 +1,10 @@
-package com.pmobrien.vultus.liftoff;
+package com.pmobrien.cfopen;
 
 import com.google.common.base.Strings;
-import com.pmobrien.vultus.liftoff.filters.RequestLoggerFilter;
-import com.pmobrien.vultus.liftoff.mappers.DefaultObjectMapper;
-import com.pmobrien.vultus.liftoff.mappers.UncaughtExceptionMapper;
-import com.pmobrien.vultus.liftoff.neo.NeoConnector;
-import com.pmobrien.vultus.liftoff.services.impl.ScoresService;
+import com.pmobrien.cfopen.filters.RequestLoggerFilter;
+import com.pmobrien.cfopen.mappers.DefaultObjectMapper;
+import com.pmobrien.cfopen.mappers.UncaughtExceptionMapper;
+import com.pmobrien.cfopen.neo.NeoConnector;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -147,7 +146,6 @@ public class Application {
         new ServletHolder(
             new ServletContainer(
                 new ResourceConfig()
-                    .register(ScoresService.class)
                     .register(DefaultObjectMapper.class)
                     .register(RequestLoggerFilter.class)
                     .register(UncaughtExceptionMapper.class)
@@ -180,12 +178,6 @@ public class Application {
     return handler;
   }
   
-  public static String getSubmissionPassword() {
-    return Optional.ofNullable(
-        System.getProperty(Properties.SUBMISSION_PASSWORD)
-    ).orElse(Properties.DEFAULT_SUBMISSION_PASSWORD);
-  }
-  
   public static class Properties {
     
     private static final String PROP_FILE = "prop-file";
@@ -197,8 +189,5 @@ public class Application {
 
     private static final String KEY_STORE_PATH = "key-store-path";
     private static final String KEY_STORE_PASSWORD = "key-store-password";
-    
-    private static final String SUBMISSION_PASSWORD = "submission-password";
-    private static final String DEFAULT_SUBMISSION_PASSWORD = "vultus";
   }
 }

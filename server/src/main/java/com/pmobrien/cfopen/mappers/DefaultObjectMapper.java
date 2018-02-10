@@ -1,4 +1,4 @@
-package com.pmobrien.vultus.liftoff.mappers;
+package com.pmobrien.cfopen.mappers;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
