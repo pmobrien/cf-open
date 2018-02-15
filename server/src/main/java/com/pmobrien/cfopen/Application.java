@@ -43,8 +43,6 @@ public class Application {
         System.getProperties().putAll(properties);
       }
       
-      Sessions.sessionOperation(session -> session.save(new Athlete()));
-      
       new Application().run(new Server());
     } catch(IOException ex) {
       ex.printStackTrace(System.out);

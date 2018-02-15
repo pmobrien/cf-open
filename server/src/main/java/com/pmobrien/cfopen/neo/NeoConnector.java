@@ -10,6 +10,7 @@ import org.neo4j.kernel.configuration.Connector.ConnectorType;
 import org.neo4j.ogm.drivers.embedded.driver.EmbeddedDriver;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
+import org.testng.util.Strings;
 
 public class NeoConnector {
   
@@ -47,9 +48,10 @@ public class NeoConnector {
   }
 
   private static String uri() {
-    return String.format(
-        "file://%s",
-        System.getProperty(Paths.get(Paths.get("").toAbsolutePath().toString(), "target", "neo-store").toString())
-    );
+    if(Strings.isNotNullAndNotEmpty(System.getProperty("neo-store"))) {
+      return Paths.get(Paths.get("").toAbsolutePath().toString(), "target", "neo-store").toString();
+    }
+    
+    return System.getProperty("neo-store");
   }
 }
