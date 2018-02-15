@@ -4,14 +4,14 @@ import com.google.common.base.Strings;
 import com.pmobrien.cfopen.filters.RequestLoggerFilter;
 import com.pmobrien.cfopen.mappers.DefaultObjectMapper;
 import com.pmobrien.cfopen.mappers.UncaughtExceptionMapper;
-import com.pmobrien.cfopen.neo.NeoConnector;
+import com.pmobrien.cfopen.neo.Sessions;
+import com.pmobrien.cfopen.neo.pojo.Athlete;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Optional;
 import org.eclipse.jetty.server.ForwardedRequestCustomizer;
 import org.eclipse.jetty.server.Handler;
@@ -43,12 +43,7 @@ public class Application {
         System.getProperties().putAll(properties);
       }
       
-      if(Strings.isNullOrEmpty(System.getProperty(NeoConnector.NEO_STORE))) {
-        System.setProperty(
-            NeoConnector.NEO_STORE,
-            Paths.get(Paths.get("").toAbsolutePath().toString(), "target", "neo-store").toString()
-        );
-      }
+      Sessions.sessionOperation(session -> session.save(new Athlete()));
       
       new Application().run(new Server());
     } catch(IOException ex) {
@@ -82,6 +77,8 @@ public class Application {
       server.start();
       server.join();
     } catch(Exception ex) {
+      ex.printStackTrace(System.out);
+      
       throw new RuntimeException(ex);
     } finally {
       server.destroy();

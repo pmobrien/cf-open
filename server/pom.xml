@@ -72,6 +72,11 @@
             <artifactId>neo4j-ogm-bolt-driver</artifactId>
             <version>${neo4j-ogm.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-bolt</artifactId>
+            <version>${neo4j.version}</version>
+        </dependency>
         
         <!-- other -->
         <dependency>
@@ -150,7 +155,7 @@
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
-                                        <Main-Class>com.pmobrien.vultus.liftoff.Application</Main-Class>
+                                        <Main-Class>com.pmobrien.cfopen.Application</Main-Class>
                                     </manifestEntries>
                                 </transformer>
                             </transformers>
