@@ -12,6 +12,9 @@ public class Athlete extends NeoEntity {
   
   @Relationship(type = "SUBMITTED", direction = Relationship.OUTGOING)
   private List<Score> scores;
+  
+  @Relationship(type = "MEMBER_OF", direction = Relationship.OUTGOING)
+  private Team team;
 
   public String getCompetitorId() {
     return competitorId;
@@ -37,6 +40,15 @@ public class Athlete extends NeoEntity {
 
   public Athlete setScores(List<Score> scores) {
     this.scores = scores;
+    return this;
+  }
+
+  public Team getTeam() {
+    return team;
+  }
+
+  public Athlete setTeam(Team team) {
+    this.team = team;
     return this;
   }
 }

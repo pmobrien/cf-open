@@ -2,9 +2,15 @@ package com.pmobrien.cfopen;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
+import com.pmobrien.cfopen.ApplicationProperties.Data.Group;
+import com.pmobrien.cfopen.ApplicationProperties.Data.Group.Member;
 import com.pmobrien.cfopen.filters.RequestLoggerFilter;
 import com.pmobrien.cfopen.mappers.DefaultObjectMapper;
 import com.pmobrien.cfopen.mappers.UncaughtExceptionMapper;
+import com.pmobrien.cfopen.neo.accessors.AthleteAccessor;
+import com.pmobrien.cfopen.neo.accessors.TeamAccessor;
+import com.pmobrien.cfopen.neo.pojo.Athlete;
+import com.pmobrien.cfopen.neo.pojo.Team;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -36,13 +42,35 @@ public class Application {
 
   public static void main(String[] args) {
     try {
-      properties = readApplicationProperties();
-      
       new Application().run(new Server());
     } catch(IOException ex) {
       ex.printStackTrace(System.out);
     } catch(Throwable t) {
       t.printStackTrace(System.out);
+    }
+  }
+  
+  public Application() throws IOException {
+    properties = readApplicationProperties();
+    
+    for(Group group : properties.getData().getGroups()) {
+      Team team = new TeamAccessor().getTeamByName(group.getName());
+      
+      if(team == null) {
+        team = new TeamAccessor().createOrUpdateTeam(new Team().setName(group.getName()));
+      }
+      
+      for(Member member : group.getMembers()) {
+        Athlete athlete = new AthleteAccessor().getAthleteByCompetitorId(member.getId());
+        
+        if(athlete == null) {
+          athlete = new Athlete()
+              .setCompetitorId(member.getId())
+              .setCompetitorName(member.getDescription());
+        }
+        
+        new AthleteAccessor().createOrUpdateAthlete(athlete.setTeam(team));
+      }
     }
   }
   
