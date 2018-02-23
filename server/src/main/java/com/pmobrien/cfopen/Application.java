@@ -1,5 +1,6 @@
 package com.pmobrien.cfopen;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.pmobrien.cfopen.filters.RequestLoggerFilter;
 import com.pmobrien.cfopen.mappers.DefaultObjectMapper;
@@ -9,7 +10,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
 import java.util.Optional;
 import org.eclipse.jetty.server.ForwardedRequestCustomizer;
 import org.eclipse.jetty.server.Handler;
@@ -29,17 +29,15 @@ import org.glassfish.jersey.servlet.ServletContainer;
 
 public class Application {
   
+  private static final String PROPERTIES_FILE = "propertiesFile";
   private static final String WEBAPP_RESOURCE_PATH = "/com/pmobrien/vultus/liftoff/webapp";
   private static final String INDEX_HTML_PATH = String.format("%s/index.html", WEBAPP_RESOURCE_PATH);
+  
+  private static ApplicationProperties properties;
 
   public static void main(String[] args) {
     try {
-      if(!Strings.isNullOrEmpty(System.getProperty(Properties.PROP_FILE))) {
-        java.util.Properties properties = new java.util.Properties();
-        properties.load(Files.newInputStream(new File(System.getProperty(Properties.PROP_FILE)).toPath()));
-        
-        System.getProperties().putAll(properties);
-      }
+      properties = readApplicationProperties();
       
       new Application().run(new Server());
     } catch(IOException ex) {
@@ -49,10 +47,22 @@ public class Application {
     }
   }
   
+  private static ApplicationProperties readApplicationProperties() throws IOException {
+    if(Strings.isNullOrEmpty(System.getProperty(PROPERTIES_FILE))) {
+      throw new RuntimeException(String.format("%s is required", PROPERTIES_FILE));
+    }
+    
+    File props = new File(System.getProperty(PROPERTIES_FILE));
+    
+    if(!props.exists()) {
+      throw new RuntimeException(String.format("%s %s does not exist!", PROPERTIES_FILE, props.getPath()));
+    }
+    
+    return new ObjectMapper().readValue(props, ApplicationProperties.class);
+  }
+  
   private static int httpPort() {
-    return Integer.parseInt(
-        Optional.ofNullable(System.getProperty(Properties.HTTP_PORT)).orElse(Properties.DEFAULT_HTTP_PORT)
-    );
+    return properties.getConfiguration().getHttpPort();
   }
   
   private static boolean useHttps() {

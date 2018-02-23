@@ -1,0 +1,13 @@
+{
+  "configuration": {
+    "pollInterval": "",
+    "boltUri": "",
+    "neoStore": "",
+    "httpPort": 15000,
+    "httpsPort": null
+  },
+  "data": {
+    "affiliateId": 8434
+  }
+}
+
