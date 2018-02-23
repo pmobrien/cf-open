@@ -4,8 +4,6 @@ import com.google.common.base.Strings;
 import com.pmobrien.cfopen.filters.RequestLoggerFilter;
 import com.pmobrien.cfopen.mappers.DefaultObjectMapper;
 import com.pmobrien.cfopen.mappers.UncaughtExceptionMapper;
-import com.pmobrien.cfopen.neo.Sessions;
-import com.pmobrien.cfopen.neo.pojo.Athlete;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;

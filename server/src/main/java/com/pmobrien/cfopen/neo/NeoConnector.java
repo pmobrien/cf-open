@@ -38,8 +38,8 @@ public class NeoConnector {
                 .newEmbeddedDatabaseBuilder(new File(uri()))
                 .setConfig(bolt.type, ConnectorType.BOLT.name())
                 .setConfig(bolt.enabled, "true")
-                .setConfig(bolt.listen_address, "localhost:17688")
-                .setConfig(bolt.advertised_address, "localhost:17688")
+                .setConfig(bolt.listen_address, "0.0.0.0:17666")
+                .setConfig(bolt.advertised_address, "0.0.0.0:17666")
                 .setConfig(bolt.encryption_level, BoltConnector.EncryptionLevel.DISABLED.name())
                 .newGraphDatabase()
         ),
