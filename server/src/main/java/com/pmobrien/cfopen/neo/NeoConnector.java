@@ -1,8 +1,8 @@
 package com.pmobrien.cfopen.neo;
 
 import com.google.common.base.Suppliers;
+import com.pmobrien.cfopen.Application;
 import java.io.File;
-import java.nio.file.Paths;
 import java.util.function.Supplier;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.kernel.configuration.BoltConnector;
@@ -37,9 +37,9 @@ public class NeoConnector {
             new GraphDatabaseFactory()
                 .newEmbeddedDatabaseBuilder(new File(uri()))
                 .setConfig(bolt.type, ConnectorType.BOLT.name())
-                .setConfig(bolt.enabled, "true")
-                .setConfig(bolt.listen_address, "0.0.0.0:17666")
-                .setConfig(bolt.advertised_address, "0.0.0.0:17666")
+                .setConfig(bolt.enabled, Application.getProperties().getConfiguration().getNeo().isBoltEnabled().toString())
+                .setConfig(bolt.listen_address, Application.getProperties().getConfiguration().getNeo().getBoltUri())
+                .setConfig(bolt.advertised_address, Application.getProperties().getConfiguration().getNeo().getBoltUri())
                 .setConfig(bolt.encryption_level, BoltConnector.EncryptionLevel.DISABLED.name())
                 .newGraphDatabase()
         ),
@@ -48,10 +48,10 @@ public class NeoConnector {
   }
 
   private static String uri() {
-    if(Strings.isNotNullAndNotEmpty(System.getProperty("neo-store"))) {
-      return Paths.get(Paths.get("").toAbsolutePath().toString(), "target", "neo-store").toString();
+    if(Strings.isNullOrEmpty(Application.getProperties().getConfiguration().getNeo().getStorage())) {
+      throw new RuntimeException("configuration.neo.storage property is required!");
     }
     
-    return System.getProperty("neo-store");
+    return Application.getProperties().getConfiguration().getNeo().getStorage();
   }
 }

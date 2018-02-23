@@ -60,6 +60,10 @@ public class Application {
     return new ObjectMapper().readValue(props, ApplicationProperties.class);
   }
   
+  public static ApplicationProperties getProperties() {
+    return properties;
+  }
+  
   private static int httpPort() {
     return properties.getConfiguration().getHttp().getPort();
   }
@@ -99,23 +103,29 @@ public class Application {
     server.addConnector(httpConnector);
     
     if(useHttps()) {
-      if(Strings.isNullOrEmpty(System.getProperty(Properties.KEY_STORE_PATH))) {
+      if(Strings.isNullOrEmpty(properties.getConfiguration().getHttps().getKeyStorePath())) {
         throw new RuntimeException(
-            String.format("'%s' property must be set to use https.", Properties.KEY_STORE_PATH)
+            String.format(
+                "'%s' property must be set to use https.",
+                properties.getConfiguration().getHttps().getKeyStorePath()
+            )
         );
       }
 
-      if(Strings.isNullOrEmpty(System.getProperty(Properties.KEY_STORE_PASSWORD))) {
+      if(Strings.isNullOrEmpty(properties.getConfiguration().getHttps().getKeyStorePassword())) {
         throw new RuntimeException(
-            String.format("'%s' property must be set to use https.", Properties.KEY_STORE_PASSWORD)
+            String.format(
+                "'%s' property must be set to use https.",
+                properties.getConfiguration().getHttps().getKeyStorePassword()
+            )
         );
       }
 
       SslContextFactory sslContextFactory = new SslContextFactory();
       sslContextFactory.setKeyStoreType("PKCS12");
-      sslContextFactory.setKeyStorePath(System.getProperty(Properties.KEY_STORE_PATH));
-      sslContextFactory.setKeyStorePassword(System.getProperty(Properties.KEY_STORE_PASSWORD));
-      sslContextFactory.setKeyManagerPassword(System.getProperty(Properties.KEY_STORE_PASSWORD));
+      sslContextFactory.setKeyStorePath(properties.getConfiguration().getHttps().getKeyStorePath());
+      sslContextFactory.setKeyStorePassword(properties.getConfiguration().getHttps().getKeyStorePassword());
+      sslContextFactory.setKeyManagerPassword(properties.getConfiguration().getHttps().getKeyStorePassword());
       
       ServerConnector connector = new ServerConnector(server, sslContextFactory, httpConnectionFactory);
       connector.setPort(httpsPort());
@@ -176,18 +186,5 @@ public class Application {
     handler.addServlet(DefaultServlet.class, "/");
     
     return handler;
-  }
-  
-  public static class Properties {
-    
-    private static final String PROP_FILE = "prop-file";
-  
-    private static final String HTTP_PORT = "http-port";
-    private static final String HTTPS_PORT = "https-port";
-    private static final String DEFAULT_HTTP_PORT = "80";
-    private static final String DEFAULT_HTTPS_PORT = "443";
-
-    private static final String KEY_STORE_PATH = "key-store-path";
-    private static final String KEY_STORE_PASSWORD = "key-store-password";
   }
 }

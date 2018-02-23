@@ -29,7 +29,7 @@ public class ApplicationProperties {
     
     private Long pollInterval;
     private String boltUri;
-    private String neoStore;
+    private Neo neo;
     private Http http;
     private Https https;
 
@@ -49,12 +49,12 @@ public class ApplicationProperties {
       this.boltUri = boltUri;
     }
 
-    public String getNeoStore() {
-      return neoStore;
+    public Neo getNeo() {
+      return neo;
     }
 
-    public void setNeoStore(String neoStore) {
-      this.neoStore = neoStore;
+    public void setNeo(Neo neo) {
+      this.neo = neo;
     }
 
     public Http getHttp() {
@@ -71,6 +71,37 @@ public class ApplicationProperties {
 
     public void setHttps(Https https) {
       this.https = https;
+    }
+    
+    public static class Neo {
+      
+      private String storage;
+      private Boolean boltEnabled;
+      private String boltUri;
+
+      public String getStorage() {
+        return storage;
+      }
+
+      public void setStorage(String storage) {
+        this.storage = storage;
+      }
+
+      public Boolean isBoltEnabled() {
+        return boltEnabled;
+      }
+
+      public void setBoltEnabled(Boolean boltEnabled) {
+        this.boltEnabled = boltEnabled;
+      }
+
+      public String getBoltUri() {
+        return boltUri;
+      }
+
+      public void setBoltUri(String boltUri) {
+        this.boltUri = boltUri;
+      }
     }
     
     public static class Http {
