@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Optional;
 import org.eclipse.jetty.server.ForwardedRequestCustomizer;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -62,17 +61,15 @@ public class Application {
   }
   
   private static int httpPort() {
-    return properties.getConfiguration().getHttpPort();
+    return properties.getConfiguration().getHttp().getPort();
   }
   
   private static boolean useHttps() {
-    return !Strings.isNullOrEmpty(System.getProperty(Properties.HTTPS_PORT));
+    return properties.getConfiguration().getHttps().isEnabled();
   }
   
   private static int httpsPort() {
-    return Integer.parseInt(
-        Optional.ofNullable(System.getProperty(Properties.HTTPS_PORT)).orElse(Properties.DEFAULT_HTTPS_PORT)
-    );
+    return properties.getConfiguration().getHttps().getPort();
   }
   
   private void run(Server server) {

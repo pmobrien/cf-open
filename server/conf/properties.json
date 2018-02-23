@@ -3,8 +3,12 @@
     "pollInterval": "",
     "boltUri": "",
     "neoStore": "",
-    "httpPort": 15000,
-    "httpsPort": null
+    "http": {
+      "port": 15000
+    },
+    "https": {
+      "enabled": false
+    }
   },
   "data": {
     "affiliateId": 8434

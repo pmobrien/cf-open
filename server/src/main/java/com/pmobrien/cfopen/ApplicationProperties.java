@@ -30,8 +30,8 @@ public class ApplicationProperties {
     private Long pollInterval;
     private String boltUri;
     private String neoStore;
-    private Integer httpPort;
-    private Integer httpsPort;
+    private Http http;
+    private Https https;
 
     public Long getPollInterval() {
       return pollInterval;
@@ -57,20 +57,73 @@ public class ApplicationProperties {
       this.neoStore = neoStore;
     }
 
-    public Integer getHttpPort() {
-      return httpPort;
+    public Http getHttp() {
+      return http;
     }
 
-    public void setHttpPort(Integer httpPort) {
-      this.httpPort = httpPort;
+    public void setHttp(Http http) {
+      this.http = http;
     }
 
-    public Integer getHttpsPort() {
-      return httpsPort;
+    public Https getHttps() {
+      return https;
     }
 
-    public void setHttpsPort(Integer httpsPort) {
-      this.httpsPort = httpsPort;
+    public void setHttps(Https https) {
+      this.https = https;
+    }
+    
+    public static class Http {
+      
+      private Integer port;
+
+      public Integer getPort() {
+        return port;
+      }
+
+      public void setPort(Integer port) {
+        this.port = port;
+      }
+    }
+    
+    public static class Https {
+      
+      private Boolean enabled;
+      private Integer port;
+      private String keyStorePath;
+      private String keyStorePassword;
+
+      public Boolean isEnabled() {
+        return enabled;
+      }
+
+      public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+      }
+
+      public Integer getPort() {
+        return port;
+      }
+
+      public void setPort(Integer port) {
+        this.port = port;
+      }
+
+      public String getKeyStorePath() {
+        return keyStorePath;
+      }
+
+      public void setKeyStorePath(String keyStorePath) {
+        this.keyStorePath = keyStorePath;
+      }
+
+      public String getKeyStorePassword() {
+        return keyStorePassword;
+      }
+
+      public void setKeyStorePassword(String keyStorePassword) {
+        this.keyStorePassword = keyStorePassword;
+      }
     }
   }
   
