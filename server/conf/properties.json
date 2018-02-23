@@ -14,7 +14,26 @@
     }
   },
   "data": {
-    "affiliateId": 8434
+    "affiliateId": 8434,
+    "groups": [
+      {
+        "name": "Team 1",
+        "members": [
+          {
+            "id": "897506",
+            "description": "Patrick O'Brien"
+          }
+        ]
+      },
+      {
+        "name": "Team 2",
+        "members": [
+          {
+            "id": "477545",
+            "description": "Josh Deppe"
+          }
+        ]
+      }
+    ]
   }
 }
-
