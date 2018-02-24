@@ -2,16 +2,13 @@ package com.pmobrien.cfopen;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
-import com.pmobrien.cfopen.ApplicationProperties.Data.Group;
-import com.pmobrien.cfopen.ApplicationProperties.Data.Group.Member;
 import com.pmobrien.cfopen.crossfitdotcom.CrossFitDotComRequester;
 import com.pmobrien.cfopen.filters.RequestLoggerFilter;
 import com.pmobrien.cfopen.mappers.DefaultObjectMapper;
 import com.pmobrien.cfopen.mappers.UncaughtExceptionMapper;
 import com.pmobrien.cfopen.neo.accessors.AthleteAccessor;
-import com.pmobrien.cfopen.neo.accessors.TeamAccessor;
 import com.pmobrien.cfopen.neo.pojo.Athlete;
-import com.pmobrien.cfopen.neo.pojo.Team;
+import com.pmobrien.cfopen.webservices.impl.AthletesWebService;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -169,6 +166,7 @@ public class Application {
         new ServletHolder(
             new ServletContainer(
                 new ResourceConfig()
+                    .register(AthletesWebService.class)
                     .register(DefaultObjectMapper.class)
                     .register(RequestLoggerFilter.class)
                     .register(UncaughtExceptionMapper.class)

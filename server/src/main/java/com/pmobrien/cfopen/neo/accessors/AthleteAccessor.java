@@ -1,10 +1,16 @@
 package com.pmobrien.cfopen.neo.accessors;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.pmobrien.cfopen.neo.Sessions;
 import com.pmobrien.cfopen.neo.pojo.Athlete;
+import java.util.List;
 
 public class AthleteAccessor {
+  
+  public List<Athlete> getAllAthletes() {
+    return Sessions.returningSessionOperation(session -> Lists.newArrayList(session.loadAll(Athlete.class)));
+  }
 
   public Athlete getAthleteByCompetitorId(String competitorId) {
     return Sessions.returningSessionOperation(session -> {
