@@ -19,7 +19,13 @@ public class AthleteAccessor {
   }
   
   public Athlete createOrUpdateAthlete(Athlete athlete) {
-    Sessions.sessionOperation(session -> session.save(athlete));
+    Athlete dbAthlete = new AthleteAccessor().getAthleteByCompetitorId(athlete.getCompetitorId());
+      
+    if(dbAthlete == null) {
+      Sessions.sessionOperation(session -> session.save(athlete));
+    } else {
+      Sessions.sessionOperation(session -> session.save(dbAthlete.setScores(athlete.getScores())));
+    }
     
     return getAthleteByCompetitorId(athlete.getCompetitorId());
   }

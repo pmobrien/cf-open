@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.pmobrien.cfopen.ApplicationProperties.Data.Group;
 import com.pmobrien.cfopen.ApplicationProperties.Data.Group.Member;
+import com.pmobrien.cfopen.crossfitdotcom.CrossFitDotComRequester;
 import com.pmobrien.cfopen.filters.RequestLoggerFilter;
 import com.pmobrien.cfopen.mappers.DefaultObjectMapper;
 import com.pmobrien.cfopen.mappers.UncaughtExceptionMapper;
@@ -53,24 +54,8 @@ public class Application {
   public Application() throws IOException {
     properties = readApplicationProperties();
     
-    for(Group group : properties.getData().getGroups()) {
-      Team team = new TeamAccessor().getTeamByName(group.getName());
-      
-      if(team == null) {
-        team = new TeamAccessor().createOrUpdateTeam(new Team().setName(group.getName()));
-      }
-      
-      for(Member member : group.getMembers()) {
-        Athlete athlete = new AthleteAccessor().getAthleteByCompetitorId(member.getId());
-        
-        if(athlete == null) {
-          athlete = new Athlete()
-              .setCompetitorId(member.getId())
-              .setCompetitorName(member.getDescription());
-        }
-        
-        new AthleteAccessor().createOrUpdateAthlete(athlete.setTeam(team));
-      }
+    for(Athlete athlete : new CrossFitDotComRequester().getAthletes(1)) {
+      new AthleteAccessor().createOrUpdateAthlete(athlete);
     }
   }
   
