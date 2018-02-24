@@ -61,7 +61,12 @@ public class Application {
       }
     }
     
+    int counter = 0;
+    teams = new TeamAccessor().getAllTeams();
+    
     for(Athlete athlete : new CrossFitDotComRequester().getAthletes(1)) {
+      athlete.setTeam(teams.get(counter++ % 4));
+      
       new AthleteAccessor().createOrUpdateAthlete(athlete);
     }
   }
