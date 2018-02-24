@@ -15,6 +15,7 @@
   },
   "data": {
     "affiliateId": "8434",
+    "teams": 4,
     "groups": [
       {
         "name": "Team 1",

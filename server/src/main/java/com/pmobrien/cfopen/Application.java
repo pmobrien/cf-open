@@ -7,13 +7,16 @@ import com.pmobrien.cfopen.filters.RequestLoggerFilter;
 import com.pmobrien.cfopen.mappers.DefaultObjectMapper;
 import com.pmobrien.cfopen.mappers.UncaughtExceptionMapper;
 import com.pmobrien.cfopen.neo.accessors.AthleteAccessor;
+import com.pmobrien.cfopen.neo.accessors.TeamAccessor;
 import com.pmobrien.cfopen.neo.pojo.Athlete;
+import com.pmobrien.cfopen.neo.pojo.Team;
 import com.pmobrien.cfopen.webservices.impl.AthletesWebService;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import org.eclipse.jetty.server.ForwardedRequestCustomizer;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -50,6 +53,13 @@ public class Application {
   
   public Application() throws IOException {
     properties = readApplicationProperties();
+    
+    List<Team> teams = new TeamAccessor().getAllTeams();
+    if(teams.size() < properties.getData().getTeams()) {
+      for(int i = teams.size(); i < properties.getData().getTeams(); ++i) {
+        new TeamAccessor().createOrUpdateTeam(new Team().setName(String.format("Team %s", i + 1)));
+      }
+    }
     
     for(Athlete athlete : new CrossFitDotComRequester().getAthletes(1)) {
       new AthleteAccessor().createOrUpdateAthlete(athlete);

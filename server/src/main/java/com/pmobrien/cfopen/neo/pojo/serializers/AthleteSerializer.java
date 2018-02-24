@@ -24,6 +24,15 @@ public class AthleteSerializer extends StdSerializer<Athlete> {
     generator.writeStringField("competitorId", athlete.getCompetitorId());
     generator.writeStringField("competitorName", athlete.getCompetitorName());
     
+    if(athlete.getTeam() != null) {
+      generator.writeObjectFieldStart("team");
+    
+      generator.writeStringField("id", athlete.getTeam().getId().toString());
+      generator.writeStringField("name", athlete.getTeam().getName());
+    
+      generator.writeEndObject();
+    }
+    
     generator.writeArrayFieldStart("scores");
     
     for(Score score : athlete.getScores()) {

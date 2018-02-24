@@ -161,6 +161,7 @@ public class ApplicationProperties {
   public static class Data {
     
     private String affiliateId;
+    private Integer teams;
     private List<Group> groups;
 
     public String getAffiliateId() {
@@ -169,6 +170,14 @@ public class ApplicationProperties {
 
     public void setAffiliateId(String affiliateId) {
       this.affiliateId = affiliateId;
+    }
+
+    public Integer getTeams() {
+      return teams;
+    }
+
+    public void setTeams(Integer teams) {
+      this.teams = teams;
     }
 
     public List<Group> getGroups() {
