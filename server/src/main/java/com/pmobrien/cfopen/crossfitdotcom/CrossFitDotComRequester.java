@@ -1,5 +1,7 @@
 package com.pmobrien.cfopen.crossfitdotcom;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.pmobrien.cfopen.Application;
 import com.pmobrien.cfopen.neo.pojo.Athlete;
 import java.util.Collections;
@@ -11,6 +13,10 @@ public class CrossFitDotComRequester {
   
   private static final String URL = "https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards";
   private static final String AFFILIATE_ID = Application.getProperties().getData().getAffiliateId();
+  
+  public List<Athlete> getAllAthletes() {
+    return Lists.newArrayList(Iterables.concat(getAthletes(1), getAthletes(2), getAthletes(5), getAthletes(7)));
+  }
   
   public List<Athlete> getAthletes(int division) {
     try {
