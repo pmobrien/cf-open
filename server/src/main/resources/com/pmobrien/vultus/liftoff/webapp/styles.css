@@ -32,3 +32,12 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.athlete-button {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.team-container {
+  min-height: 100px !important;
+}
