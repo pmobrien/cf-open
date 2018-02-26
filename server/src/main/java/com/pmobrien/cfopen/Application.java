@@ -58,7 +58,11 @@ public class Application {
     List<Team> teams = new TeamAccessor().getAllTeams();
     if(teams.size() < properties.getData().getTeams()) {
       for(int i = teams.size(); i < properties.getData().getTeams(); ++i) {
-        new TeamAccessor().createOrUpdateTeam(new Team().setName(String.format("Team %s", i + 1)));
+        new TeamAccessor().createOrUpdateTeam(
+            new Team()
+                .setOrdinal(i)
+                .setName(String.format("Team %s", i))
+        );
       }
     }
     

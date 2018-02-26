@@ -38,6 +38,10 @@ input[type="number"] {
   margin-bottom: 4px;
 }
 
+.team-containers {
+  margin-bottom: 20px;
+}
+
 .team-container {
   min-height: 100px !important;
 }
