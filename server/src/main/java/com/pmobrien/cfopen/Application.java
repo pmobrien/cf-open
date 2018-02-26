@@ -11,6 +11,7 @@ import com.pmobrien.cfopen.neo.accessors.TeamAccessor;
 import com.pmobrien.cfopen.neo.pojo.Athlete;
 import com.pmobrien.cfopen.neo.pojo.Team;
 import com.pmobrien.cfopen.webservices.impl.AthletesWebService;
+import com.pmobrien.cfopen.webservices.impl.TeamsWebService;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -182,6 +183,7 @@ public class Application {
             new ServletContainer(
                 new ResourceConfig()
                     .register(AthletesWebService.class)
+                    .register(TeamsWebService.class)
                     .register(DefaultObjectMapper.class)
                     .register(RequestLoggerFilter.class)
                     .register(UncaughtExceptionMapper.class)
