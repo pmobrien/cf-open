@@ -38,6 +38,10 @@ input[type="number"] {
   margin-bottom: 4px;
 }
 
+.main-team-container {
+  margin-bottom: 20px;
+}
+
 .team-containers {
   margin-bottom: 20px;
 }
