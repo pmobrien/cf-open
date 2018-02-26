@@ -27,6 +27,7 @@ public class AthleteSerializer extends StdSerializer<Athlete> {
     if(athlete.getTeam() != null) {
       generator.writeObjectFieldStart("team");
       
+      generator.writeNumberField("id", athlete.getTeam().getId());
       generator.writeNumberField("ordinal", athlete.getTeam().getOrdinal());
       generator.writeStringField("name", athlete.getTeam().getName());
     

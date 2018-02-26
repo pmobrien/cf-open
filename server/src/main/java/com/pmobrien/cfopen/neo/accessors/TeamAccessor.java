@@ -11,6 +11,10 @@ public class TeamAccessor {
   public List<Team> getAllTeams() {
     return Sessions.returningSessionOperation(session -> Lists.newArrayList(session.loadAll(Team.class)));
   }
+  
+  public Team getTeam(Long id) {
+    return Sessions.returningSessionOperation(session -> session.load(Team.class, id));
+  }
 
   public Team getTeamByName(String name) {
     return Sessions.returningSessionOperation(session -> {

@@ -22,6 +22,7 @@ public class TeamSerializer extends StdSerializer<Team> {
   public void serialize(Team team, JsonGenerator generator, SerializerProvider provider) throws IOException {
     generator.writeStartObject();
     
+    generator.writeNumberField("id", team.getId());
     generator.writeNumberField("ordinal", team.getOrdinal());
     generator.writeStringField("name", team.getName());
     
