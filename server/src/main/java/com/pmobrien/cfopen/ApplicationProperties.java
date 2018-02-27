@@ -161,8 +161,7 @@ public class ApplicationProperties {
   public static class Data {
     
     private String affiliateId;
-    private Integer teams;
-    private List<Group> groups;
+    private Teams teams;
 
     public String getAffiliateId() {
       return affiliateId;
@@ -172,63 +171,33 @@ public class ApplicationProperties {
       this.affiliateId = affiliateId;
     }
 
-    public Integer getTeams() {
+    public Teams getTeams() {
       return teams;
     }
 
-    public void setTeams(Integer teams) {
+    public void setTeams(Teams teams) {
       this.teams = teams;
     }
-
-    public List<Group> getGroups() {
-      return groups;
-    }
-
-    public void setGroups(List<Group> groups) {
-      this.groups = groups;
-    }
     
-    public static class Group {
+    public static class Teams {
       
-      private String name;
-      private List<Member> members;
+      private Integer count;
+      private String updatePassword;
 
-      public String getName() {
-        return name;
+      public Integer getCount() {
+        return count;
       }
 
-      public void setName(String name) {
-        this.name = name;
+      public void setCount(Integer count) {
+        this.count = count;
       }
 
-      public List<Member> getMembers() {
-        return members;
+      public String getUpdatePassword() {
+        return updatePassword;
       }
 
-      public void setMembers(List<Member> members) {
-        this.members = members;
-      }
-      
-      public static class Member {
-        
-        private String id;
-        private String description;
-
-        public String getId() {
-          return id;
-        }
-
-        public void setId(String id) {
-          this.id = id;
-        }
-
-        public String getDescription() {
-          return description;
-        }
-
-        public void setDescription(String description) {
-          this.description = description;
-        }
+      public void setUpdatePassword(String updatePassword) {
+        this.updatePassword = updatePassword;
       }
     }
   }

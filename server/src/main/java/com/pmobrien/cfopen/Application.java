@@ -56,8 +56,8 @@ public class Application {
     properties = readApplicationProperties();
     
     List<Team> teams = new TeamAccessor().getAllTeams();
-    if(teams.size() < properties.getData().getTeams()) {
-      for(int i = teams.size(); i < properties.getData().getTeams(); ++i) {
+    if(teams.size() < properties.getData().getTeams().getCount()) {
+      for(int i = teams.size(); i < properties.getData().getTeams().getCount(); ++i) {
         new TeamAccessor().createOrUpdateTeam(
             new Team()
                 .setOrdinal(i)
