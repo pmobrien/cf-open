@@ -70,9 +70,7 @@ public class Application {
     teams = new TeamAccessor().getAllTeams();
     
     for(Athlete athlete : new CrossFitDotComRequester().getAllAthletes()) {
-      athlete.setTeam(teams.get(counter++ % 4));
-      
-      new AthleteAccessor().createOrUpdateAthlete(athlete);
+      new AthleteAccessor().createOrUpdateAthlete(athlete.setTeam(teams.get(counter++ % 4)));
     }
   }
   

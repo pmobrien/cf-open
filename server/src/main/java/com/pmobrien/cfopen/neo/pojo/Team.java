@@ -1,12 +1,14 @@
 package com.pmobrien.cfopen.neo.pojo;
 
 import java.util.List;
+import org.neo4j.ogm.annotation.Index;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity
 public class Team extends NeoEntity {
 
+  @Index(unique = true)
   private Integer ordinal;
   private String name;
   

@@ -14,8 +14,11 @@ public class CrossFitDotComRequester {
   private static final String URL = "https://games.crossfit.com/competitions/api/v1/competitions/open/2018/leaderboards";
   private static final String AFFILIATE_ID = Application.getProperties().getData().getAffiliateId();
   
+  private static final int MENS_DIVISION = 1;
+  private static final int WOMENS_DIVISION = 2;
+  
   public List<Athlete> getAllAthletes() {
-    return Lists.newArrayList(Iterables.concat(getAthletes(1), getAthletes(2), getAthletes(5), getAthletes(7)));
+    return Lists.newArrayList(Iterables.concat(getAthletes(MENS_DIVISION), getAthletes(WOMENS_DIVISION)));
   }
   
   public List<Athlete> getAthletes(int division) {

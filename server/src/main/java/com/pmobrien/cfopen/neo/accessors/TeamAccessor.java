@@ -28,6 +28,20 @@ public class TeamAccessor {
     });
   }
   
+  public Team getTeamByOrdinal(Integer ordinal) {
+    return Sessions.returningSessionOperation(session -> {
+      return session.queryForObject(
+          Team.class,
+          "MATCH (team:Team { ordinal: {ordinal} }) " +
+          "OPTIONAL MATCH (athlete:Athlete)-[member:MEMBER_OF]->(team) " +
+          "RETURN team, member, athlete",
+          ImmutableMap.<String, Object>builder()
+              .put("ordinal", ordinal)
+              .build()
+      );
+    });
+  }
+  
   public Team createOrUpdateTeam(Team team) {
     Sessions.sessionOperation(session -> session.save(team));
     
