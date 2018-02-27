@@ -28,6 +28,15 @@ function getAthletes() {
   );
 }
 
+function passwordKeyDown() {
+  var e = event || window.event;
+  var key = e.keyCode || e.which;
+  
+  if(key === 13) {
+    save();
+  }
+}
+
 function save() {
   var athletes = [];
   
@@ -102,10 +111,30 @@ function save() {
   $.ajax({
     type: 'PUT',
     contentType: 'application/json',
-    url: '/api/athletes',
+    url: '/api/athletes?password=' + $("#password-input").val(),
     data: JSON.stringify({
       athletes: athletes
-    })
+    }),
+    success: function() {
+      $('#submit-message').addClass('success-message');
+      $('#submit-message').removeClass('error-message');
+      $('#submit-message').html('Submission successful.');
+
+      setTimeout(function() {
+        $('#submit-message').html('');
+      }, 5000);
+    },
+    error: function(error) {
+      $('#submit-message').addClass('error-message');
+      $('#submit-message').removeClass('success-message');
+      
+      if(error.status === 409) {
+        $('#submit-message').html(error.responseJSON.message);
+      } else {
+        console.log(error);
+        $('#submit-message').html('Unknown error.');
+      }
+    }
   });
 }
 
